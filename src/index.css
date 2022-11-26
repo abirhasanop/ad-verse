@@ -5,6 +5,9 @@
 /* ::-webkit-scrollbar {
   display: none;
 } */
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;

@@ -3,8 +3,9 @@ import { GoVerified } from 'react-icons/go';
 import { MdLocationPin } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-const MyProduct = ({ myProduct }) => {
-    const { img, sellerName, varified, name, originalPrice, location, yearsOfUse, condition, description, resalePrice, _id, status } = myProduct
+const MyProduct = ({ myProduct, handleProductDelete, handleAdvertize }) => {
+    const { img, sellerName, varified, name, originalPrice, location, yearsOfUse, condition, description, resalePrice, _id, status,
+        advertised } = myProduct
 
 
 
@@ -38,8 +39,10 @@ const MyProduct = ({ myProduct }) => {
                     <div className="dropdown dropdown-top">
                         <label tabIndex={0} className="btn bg-orange-500 border-none m-1">Action</label>
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow-lg rounded-box w-52  bg-orange-50">
-                            <li className='font-semibold text-success'><Link>Advertize Now</Link></li>
-                            <li className='font-semibold text-error'><Link>Delete Product</Link></li>
+                            <li onClick={() => handleAdvertize(_id)} disabled className='font-semibold text-success'>
+                                <Link>{advertised ? "Already Avertized" : "Advertize"}</Link>
+                            </li>
+                            <li onClick={() => handleProductDelete(_id)} className='font-semibold text-error'><Link>Delete Product</Link></li>
                         </ul>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { AuthContext } from '../Contexts/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
@@ -13,8 +13,19 @@ const DashboardLayout = () => {
     console.log("isAdmin =", isAdmin);
 
 
+    // scroolbar issue fixing
+    // useEffect(() => {
+    //     document.body.style.overflow = 'hidden'
+    //     document.body.style.maxHeight = '100vh'
+    //     return () => {
+    //         document.body.style.overflow = 'scroll'
+    //         document.body.style.maxHeight = 'auto'
+    //     }
+    // }, [])
+
+
     return (
-        <div>
+        <div className='overflow-hidden'>
             <Header />
             <div className="drawer drawer-mobile">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />

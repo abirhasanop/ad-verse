@@ -46,6 +46,7 @@ const Login = () => {
                 const user = result.user
                 console.log(user);
                 toast.success("Login Succesfully")
+                navigate(from, { replace: true })
                 setLoding(false)
             })
             .catch(err => {

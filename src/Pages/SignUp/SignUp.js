@@ -59,6 +59,7 @@ const SignUp = () => {
                 const user = result.user
                 console.log(user);
                 toast.success("Account Created Succesfully")
+                navigate(from, { replace: true })
                 setLoding(false)
             })
             .catch(err => {

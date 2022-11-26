@@ -25,6 +25,19 @@ const CategoryProducts = () => {
     ]
 
 
+
+    // scroll bar issue fixing
+    // useEffect(() => {
+    //     document.body.style.overflow = 'hidden'
+    //     document.body.style.maxHeight = '100vh'
+    //     return () => {
+    //         document.body.style.overflow = 'scroll'
+    //         document.body.style.maxHeight = 'auto'
+    //     }
+    // }, [])
+
+
+
     console.log(categoryProducts);
     return (
         <div className=' mt-7'>
@@ -42,14 +55,13 @@ const CategoryProducts = () => {
 
 
                     {/* Products */}
-                    <section className=''>
-                        <div className='flex flex-wrap gap-10'>
-                            {
-                                categoryProducts?.map(product => <Product key={product._id} product={product} />)
-                            }
-                        </div>
 
-                    </section>
+                    <div className='flex flex-wrap gap-10'>
+                        {
+                            categoryProducts?.map(product => <Product key={product._id} product={product} />)
+                        }
+                    </div>
+
                 </div>
 
                 {/* menu */}

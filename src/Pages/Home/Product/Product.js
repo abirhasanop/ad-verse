@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MdLocationPin } from "react-icons/md"
 import { GoVerified } from "react-icons/go"
+import { AuthContext } from '../../../Contexts/AuthProvider';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Product = ({ product, setProduct }) => {
+    const { user } = useContext(AuthContext)
     const { img, sellerName, varified, name, originalPrice, location, yearsOfUse, condition, description, resalePrice, _id, status } = product
 
+    const navigate = useNavigate()
+    const handleSendToLogin = () => {
+        if (!user) {
+            return navigate("/login")
+        }
+    }
 
 
     return (
@@ -33,7 +43,9 @@ const Product = ({ product, setProduct }) => {
                 <p>{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
                 <div className="card-actions justify-between items-center">
                     <h3 className='text-xl font-bold'><span className='text-orange-500'>Price</span>: ${resalePrice}</h3>
-                    <label onClick={() => setProduct(product)} htmlFor="my-modal-3" className="btn bg-orange-500 border-none">Purchase</label>
+                    <div onClick={handleSendToLogin}>
+                        <label onClick={() => setProduct(product)} htmlFor="my-modal-3" className="btn bg-orange-500 border-none">Purchase</label>
+                    </div>
                 </div>
             </div>
         </div>

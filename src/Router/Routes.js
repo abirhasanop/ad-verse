@@ -12,10 +12,16 @@ import ReportedProduct from "../Pages/Dashboard/ReportedProduct/ReportedProduct"
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
+import ErrorPage from "../Shared/ErrorPage/ErrorPage";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
+import SellerRoute from "./SellerRoute";
 
 export const router = createBrowserRouter([
+    {
+        path: "*",
+        element: <ErrorPage />
+    },
     {
         path: "/",
         element: <Main />,
@@ -60,15 +66,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/dashboard/addproduct",
-                element: <AddProducts />
+                element: <SellerRoute><AddProducts /></SellerRoute>
             },
             {
                 path: "/dashboard/myproducts",
-                element: <MyProducts />
+                element: <SellerRoute><MyProducts /></SellerRoute>
             },
             {
                 path: "/dashboard/reported-products",
-                element: <ReportedProduct />
+                element: <AdminRoute><ReportedProduct /></AdminRoute>
             }
         ]
     }
