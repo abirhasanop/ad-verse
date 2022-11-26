@@ -17,6 +17,16 @@ const MyOrders = () => {
 
     console.log(myOrders);
 
+    const handleCancelOrder = (_id) => {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/orders/${_id}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+    }
+
     return (
         <div>
             <h1 className='text-3xl'>My Orders</h1>
@@ -58,7 +68,7 @@ const MyOrders = () => {
                                             <button className="btn btn-success text-white btn-xs">Pay</button>
                                         </th>
                                         <td>
-                                            <button className="btn btn-error btn-xs">Cancel</button>
+                                            <button onClick={() => handleCancelOrder(_id)} className="btn btn-error btn-xs">Cancel</button>
                                         </td>
                                     </tr>
                                 )

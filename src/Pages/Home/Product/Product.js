@@ -11,9 +11,7 @@ const Product = ({ product, setProduct }) => {
 
     const navigate = useNavigate()
     const handleSendToLogin = () => {
-        if (!user) {
-            return navigate("/login")
-        }
+        navigate("/login")
     }
 
 
@@ -43,9 +41,12 @@ const Product = ({ product, setProduct }) => {
                 <p>{description.length > 100 ? description.slice(0, 100) + "..." : description}</p>
                 <div className="card-actions justify-between items-center">
                     <h3 className='text-xl font-bold'><span className='text-orange-500'>Price</span>: ${resalePrice}</h3>
-                    <div onClick={handleSendToLogin}>
-                        <label onClick={() => setProduct(product)} htmlFor="my-modal-3" className="btn bg-orange-500 border-none">Purchase</label>
-                    </div>
+                    {
+                        user ?
+                            <label onClick={() => setProduct(product)} htmlFor="my-modal-3" className="btn bg-orange-500 border-none">Purchase</label>
+                            :
+                            <label onClick={handleSendToLogin} className="btn btn-sm bg-orange-500 border-none">Login To Purchase</label>
+                    }
                 </div>
             </div>
         </div>

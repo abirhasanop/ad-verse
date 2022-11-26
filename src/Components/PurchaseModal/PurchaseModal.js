@@ -2,7 +2,6 @@ import React from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { toast } from "react-hot-toast"
-import { useNavigate } from 'react-router-dom';
 
 const PurchaseModal = ({ product, setProduct, refetch }) => {
     const { user } = useContext(AuthContext)

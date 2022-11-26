@@ -4,11 +4,13 @@ import { Link, useParams } from 'react-router-dom';
 import Product from '../Home/Product/Product';
 import categoryImg1 from '../../Assets/categoryOption1.jpg'
 import categoryImg2 from '../../Assets/categoryOption2.jpg'
+import PurchaseModal from '../../Components/PurchaseModal/PurchaseModal';
 
 const CategoryProducts = () => {
+    const [product, setProduct] = useState(null)
     const { categoryName } = useParams()
 
-    const { data: categoryProducts = [] } = useQuery({
+    const { data: categoryProducts = [], refetch } = useQuery({
         queryKey: ["categoryProducts", categoryName],
         queryFn: async () => {
             const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allproducts/${categoryName}`)
@@ -17,13 +19,11 @@ const CategoryProducts = () => {
         }
     })
 
-
     const categoryOptions = [
         { categoryName: "Xiaomi", img: categoryImg1 },
         { categoryName: "Samsung", img: "https://images.unsplash.com/photo-1488509082528-cefbba5ad692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGhvbmV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" },
         { categoryName: "Iphone", img: categoryImg2 },
     ]
-
 
 
     // scroll bar issue fixing
@@ -45,7 +45,7 @@ const CategoryProducts = () => {
             {/* Drawer*/}
             <div className="drawer drawer-mobile">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content">
+                <div className="drawer-content pl-10">
                     {/* button */}
                     <label htmlFor="my-drawer-2" className="btn btn-circle swap swap-rotate drawer-button lg:hidden">
                         <input type="checkbox" />
@@ -58,10 +58,12 @@ const CategoryProducts = () => {
 
                     <div className='flex flex-wrap gap-10'>
                         {
-                            categoryProducts?.map(product => <Product key={product._id} product={product} />)
+                            categoryProducts?.map(product => <Product key={product._id} product={product} setProduct={setProduct} />)
                         }
                     </div>
-
+                    {
+                        product && <PurchaseModal product={product} setProduct={setProduct} refetch={refetch} />
+                    }
                 </div>
 
                 {/* menu */}

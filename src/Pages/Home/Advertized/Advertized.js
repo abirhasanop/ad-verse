@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import PurchaseModal from '../../../Components/PurchaseModal/PurchaseModal';
 import Product from '../Product/Product';
 
 const Advertized = () => {
+    const [product, setProduct] = useState(null)
 
     const { data: advertizedProduct = [], refetch } = useQuery({
         queryKey: ["advertizedproduct"],
@@ -12,9 +14,6 @@ const Advertized = () => {
             return data
         }
     })
-
-    console.log("All Advertizesss", advertizedProduct);
-
 
 
     return (
@@ -27,10 +26,13 @@ const Advertized = () => {
             <section id='allproducts' className='flex justify-center'>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10'>
                     {
-                        advertizedProduct?.map((product, i) => <Product key={i} product={product} />)
+                        advertizedProduct?.map((product, i) => <Product key={i} product={product} setProduct={setProduct} />)
                     }
                 </div>
             </section>
+            {
+                product && <PurchaseModal product={product} setProduct={setProduct} refetch={refetch} />
+            }
         </section>
     );
 };
