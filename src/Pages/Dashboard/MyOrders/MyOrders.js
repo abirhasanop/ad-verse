@@ -6,7 +6,7 @@ const MyOrders = () => {
     const { user } = useContext(AuthContext)
 
 
-    const { data: myOrders = [] } = useQuery({
+    const { data: myOrders = [], refetch } = useQuery({
         queryKey: ["myorders"],
         queryFn: async () => {
             const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/orders?email=${user?.email}`)
@@ -24,6 +24,7 @@ const MyOrders = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                refetch()
             })
     }
 
