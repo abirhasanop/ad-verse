@@ -4,10 +4,11 @@ import { GoVerified } from "react-icons/go"
 import { AuthContext } from '../../../Contexts/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import Moment from 'react-moment';
 
 const Product = ({ product, setProduct }) => {
     const { user } = useContext(AuthContext)
-    const { img, sellerName, varified, name, originalPrice, location, yearsOfUse, condition, description, resalePrice, _id, status } = product
+    const { img, sellerName, varified, name, originalPrice, location, yearsOfUse, condition, description, resalePrice, _id, status, postDate, isPaid } = product
 
     const navigate = useNavigate()
     const handleSendToLogin = () => {
@@ -36,7 +37,7 @@ const Product = ({ product, setProduct }) => {
 
 
     return (
-        <div className="card card-compact w-80 bg-base-100 rounded-lg shadow-2xl">
+        <div className={`card card-compact w-80 bg-base-100 rounded-lg shadow-2xl ${isPaid && "hidden"}`}>
             <figure><img className='w-full h-52' src={img} alt="Shoes" /></figure>
             <div className="card-body">
                 <div className='flex justify-between items-center'>
@@ -48,7 +49,9 @@ const Product = ({ product, setProduct }) => {
                                     <GoVerified className='text-blue-400 ml-1' /> : ""
                             }
                         </h4>
-                        <p className='text-sm text-gray-400'>Posted: 3days ago</p>
+                        <p className='text-sm text-gray-400'>Posted: {postDate ? <Moment className="text-xs ml-1 text-gray-500" fromNow>
+                            {postDate}
+                        </Moment> : "7 days ago"}</p>
                     </div>
                     <button disabled={status === "Sold"} onClick={() => handleReport(product)} className='font-bold btn bg-orange-500 border-none btn-xs'>Report</button>
                 </div><hr />

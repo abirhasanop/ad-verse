@@ -53,7 +53,8 @@ const AddProducts = () => {
                         condition,
                         description,
                         advertised: false,
-                        img: imageData.data.url
+                        img: imageData.data.url,
+                        postDate: new Date()
                     }
                     fetch(`${process.env.REACT_APP_SERVER_URL}/myproducts`, {
                         method: "POST",
