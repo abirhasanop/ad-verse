@@ -19,7 +19,7 @@ const Payment = () => {
             {/* stripe form */}
             <section className='w-96 my-12'>
                 <Elements stripe={stripePromise}>
-                    <CheckoutForm />
+                    <CheckoutForm order={order} />
                 </Elements>
             </section>
         </div>
