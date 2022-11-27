@@ -43,7 +43,7 @@ const Product = ({ product, setProduct }) => {
                     <h3 className='text-xl font-bold'><span className='text-orange-500'>Price</span>: ${resalePrice}</h3>
                     {
                         user ?
-                            <label onClick={() => setProduct(product)} htmlFor="my-modal-3" className="btn bg-orange-500 border-none">Purchase</label>
+                            <label onClick={() => setProduct(product)} htmlFor="my-modal-3" className={`btn bg-orange-500 border-none ${status === "Sold" && "btn-disabled bg-orange-300"}`}>Purchase</label>
                             :
                             <label onClick={handleSendToLogin} className="btn btn-sm bg-orange-500 border-none">Login To Purchase</label>
                     }

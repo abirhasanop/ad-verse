@@ -8,6 +8,7 @@ import Allsellers from "../Pages/Dashboard/Allsellers/Allsellers";
 import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
 import MyOrders from "../Pages/Dashboard/MyOrders/MyOrders";
 import MyProducts from "../Pages/Dashboard/MyProducts/MyProducts";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 import ReportedProduct from "../Pages/Dashboard/ReportedProduct/ReportedProduct";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -75,6 +76,11 @@ export const router = createBrowserRouter([
             {
                 path: "/dashboard/reported-products",
                 element: <AdminRoute><ReportedProduct /></AdminRoute>
+            },
+            {
+                path: "/dashboard/myorders/payment/:id",
+                loader: ({params}) => fetch(`${process.env.REACT_SERVER_URL}/orders/${params.id}`),
+                element: <Payment/>
             }
         ]
     }

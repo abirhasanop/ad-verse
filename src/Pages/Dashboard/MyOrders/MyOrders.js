@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 
 const MyOrders = () => {
@@ -15,11 +16,15 @@ const MyOrders = () => {
         }
     })
 
-    console.log(myOrders);
+    // console.log(myOrders);
 
-    const handleCancelOrder = (_id) => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/orders/${_id}`, {
-            method: "DELETE"
+    const handleCancelOrder = (_id, productId) => {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/orders/delete/${_id}`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({ productId })
         })
             .then(res => res.json())
             .then(data => {
@@ -45,7 +50,7 @@ const MyOrders = () => {
                     <tbody>
                         {
                             myOrders?.map((order, i) => {
-                                const { _id, img, productName, price } = order
+                                const { _id, img, productName, price, productId } = order
 
                                 return (
                                     <tr key={_id}>
@@ -66,10 +71,12 @@ const MyOrders = () => {
                                             {price}
                                         </td>
                                         <th>
-                                            <button className="btn btn-success text-white btn-xs">Pay</button>
+                                            <Link to={`/dashboard/myorders/payment/${_id}`}>
+                                                <button className="btn btn-success text-white btn-xs">Pay</button>
+                                            </Link>
                                         </th>
                                         <td>
-                                            <button onClick={() => handleCancelOrder(_id)} className="btn btn-error btn-xs">Cancel</button>
+                                            <button onClick={() => handleCancelOrder(_id, productId)} className="btn btn-error btn-xs">Cancel</button>
                                         </td>
                                     </tr>
                                 )

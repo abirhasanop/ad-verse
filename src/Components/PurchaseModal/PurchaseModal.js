@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast"
 const PurchaseModal = ({ product, setProduct, refetch }) => {
     const { user } = useContext(AuthContext)
 
-    const { name, resalePrice, img } = product
+    const { name, resalePrice, img, _id } = product
 
 
     const handleSubmit = (event) => {
@@ -27,7 +27,8 @@ const PurchaseModal = ({ product, setProduct, refetch }) => {
             email,
             price,
             phone,
-            location
+            location,
+            productId: _id
         }
         console.log(orderInfo);
         fetch(`${process.env.REACT_APP_SERVER_URL}/orders`, {
@@ -43,7 +44,7 @@ const PurchaseModal = ({ product, setProduct, refetch }) => {
                     console.log(data);
                     toast.success(`${name} Orderd Succesfully`)
                     setProduct(null)
-                    // refetch()
+                    refetch()
                 } else {
                     setProduct(null)
                     toast.error(data.message)
