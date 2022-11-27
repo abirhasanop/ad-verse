@@ -4,11 +4,14 @@ import { useState } from 'react';
 
 const CheckoutForm = ({ order }) => {
     const [cardError, setCardError] = useState('')
+    const [success, setSucces] = useState("")
+    const [transactionId, setTransactionId] = useState("")
+    const [processing, setProcessing] = useState(false)
     const [clientSecret, setClientSecret] = useState("");
 
     const stripe = useStripe()
     const elements = useElements()
-    const { price, buyerName, email} = order
+    const { price, buyerName, email } = order
 
 
     useEffect(() => {
@@ -50,7 +53,8 @@ const CheckoutForm = ({ order }) => {
         }
 
 
-
+        setSucces("")
+        setProcessing(true)
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
             clientSecret,
             {
@@ -64,10 +68,16 @@ const CheckoutForm = ({ order }) => {
             },
         );
 
-        if(confirmError){
+        if (confirmError) {
             setCardError(confirmError.message)
             return
         }
+
+        if (paymentIntent.status === "succeeded") {
+            setSucces("Your Payment completed")
+            setTransactionId(paymentIntent.id)
+        }
+        setProcessing(false)
         console.log("payment Intent", paymentIntent);
 
     }
@@ -91,11 +101,17 @@ const CheckoutForm = ({ order }) => {
                         },
                     }}
                 />
-                <button className='btn btn-sm bg-orange-500 border-none mt-5' type="submit" disabled={!stripe || !clientSecret}>
+                <button className={`btn btn-sm bg-orange-500 border-none mt-5 ${processing && "loading"}`} type="submit" disabled={!stripe || !clientSecret || processing}>
                     Pay
                 </button>
             </form>
             <p className="text-red-500">{cardError}</p>
+            {
+                success && <>
+                    <p className="text-green-500">{success}</p>
+                    <p>Your Transaction Id <span className='font-bold'>{transactionId}</span></p>
+                </>
+            }
         </div>
     );
 };
