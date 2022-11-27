@@ -26,6 +26,21 @@ const Allsellers = () => {
     }
 
 
+
+
+    const handleUserDelete = (_id, name) => {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/users/${_id}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                refetch()
+                toast.success(`${name} Was Deleted Successfully`)
+            })
+    }
+
+
     const handleVerified = (name) => {
         toast.error(`${name} Alreary Verified`)
     }
@@ -50,7 +65,7 @@ const Allsellers = () => {
                     <tbody>
                         {
                             allSellers?.map((buyer, i) => {
-                                const { name, email, role, varified } = buyer
+                                const { name, email, role, varified, _id } = buyer
                                 return (
                                     <tr key={i} className="hover">
                                         <th>{i + 1}</th>
@@ -66,7 +81,7 @@ const Allsellers = () => {
                                                     <td><button onClick={() => handleVerified(name)} className='btn btn-success text-white btn-xs'>Verified</button></td>
                                                 </>
                                         }
-                                        <td><button className='btn btn-error text-white  btn-xs'>Delete</button></td>
+                                        <td><button onClick={() => handleUserDelete(_id, name)} className='btn btn-error text-white  btn-xs'>Delete</button></td>
                                     </tr>
                                 )
                             })

@@ -14,18 +14,40 @@ const Product = ({ product, setProduct }) => {
         navigate("/login")
     }
 
+    const handleReport = (_id, product) => {
+        console.log(_id);
+
+        fetch(`${process.env.REACT_APP_SERVER_URL}/allproducts/report/${_id}`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+    }
+
 
     return (
         <div className="card card-compact w-80 bg-base-100 rounded-lg shadow-2xl">
             <figure><img className='w-full h-52' src={img} alt="Shoes" /></figure>
             <div className="card-body">
-                <h4 className='text-sm font-bold flex items-center'>
-                    Sellers Name: {sellerName}
-                    {
-                        varified ?
-                            <GoVerified className='text-blue-400 ml-1' /> : ""
-                    }
-                </h4><hr />
+                <div className='flex justify-between items-center'>
+                    <div>
+                        <h4 className='text-sm font-bold flex items-center'>
+                            Sellers Name: {sellerName}
+                            {
+                                varified ?
+                                    <GoVerified className='text-blue-400 ml-1' /> : ""
+                            }
+                        </h4>
+                        <p className='text-sm text-gray-400'>Posted: 3days ago</p>
+                    </div>
+                    <button onClick={() => handleReport(_id, product)} className='font-bold btn bg-orange-500 border-none btn-xs'>Report</button>
+                </div><hr />
                 <div>
                     <h2 className="card-title ">{name}</h2>
                     <div className='flex w-full items-center'>

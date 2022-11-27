@@ -86,7 +86,7 @@ const MyOrders = () => {
                                             }
                                         </th>
                                         <td>
-                                            <button onClick={() => handleCancelOrder(_id, productId)} className="btn btn-error btn-xs">Cancel</button>
+                                            <button disabled={isPaid} onClick={() => handleCancelOrder(_id, productId)} className="btn btn-error btn-xs">Cancel</button>
                                         </td>
                                     </tr>
                                 )
