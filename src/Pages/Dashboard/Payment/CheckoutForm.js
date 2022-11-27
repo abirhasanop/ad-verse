@@ -8,9 +8,16 @@ const CheckoutForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if(!stripe || !elements){
+        if (!stripe || !elements) {
             return
         }
+
+        const card = elements.getElement(CardElement);
+
+        if (card == null) {
+            return;
+        }
+
     }
 
     return (
@@ -32,7 +39,7 @@ const CheckoutForm = () => {
                         },
                     }}
                 />
-                <button type="submit" disabled={!stripe}>
+                <button className='btn btn-sm bg-orange-500 border-none mt-5' type="submit" disabled={!stripe}>
                     Pay
                 </button>
             </form>
