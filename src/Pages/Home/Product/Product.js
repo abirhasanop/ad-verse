@@ -14,10 +14,11 @@ const Product = ({ product, setProduct }) => {
         navigate("/login")
     }
 
-    const handleReport = (_id, product) => {
-        console.log(_id);
+    const handleReport = (product) => {
 
-        fetch(`${process.env.REACT_APP_SERVER_URL}/allproducts/report/${_id}`, {
+        console.log(product);
+
+        fetch(`${process.env.REACT_APP_SERVER_URL}/allproducts/report`, {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -27,6 +28,9 @@ const Product = ({ product, setProduct }) => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                if (data.acknowledged) {
+                    toast.success("Reported Succesfully")
+                }
             })
     }
 
@@ -46,7 +50,7 @@ const Product = ({ product, setProduct }) => {
                         </h4>
                         <p className='text-sm text-gray-400'>Posted: 3days ago</p>
                     </div>
-                    <button onClick={() => handleReport(_id, product)} className='font-bold btn bg-orange-500 border-none btn-xs'>Report</button>
+                    <button disabled={status === "Sold"} onClick={() => handleReport(product)} className='font-bold btn bg-orange-500 border-none btn-xs'>Report</button>
                 </div><hr />
                 <div>
                     <h2 className="card-title ">{name}</h2>

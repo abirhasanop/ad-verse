@@ -32,6 +32,30 @@ const SignUp = () => {
         createUserWithEmail(userInfo.email, userInfo.password)
             .then(result => {
                 const user = result.user
+
+
+
+                // token
+                const currentUser = {
+                    email: user?.email
+                }
+
+                fetch(`${process.env.REACT_APP_SERVER_URL}/jwt`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        localStorage.setItem("adVerseToken", data.token)
+                    })
+
+
+
+
                 if (user) {
                     const profileInfo = { displayName: userInfo.name }
                     updateUserProfile(profileInfo)

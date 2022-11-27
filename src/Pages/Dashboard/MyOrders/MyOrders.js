@@ -11,7 +11,11 @@ const MyOrders = () => {
     const { data: myOrders = [], refetch } = useQuery({
         queryKey: ["myorders"],
         queryFn: async () => {
-            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/orders?email=${user?.email}`)
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/orders?email=${user?.email}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('adVerseToken')}`
+                }
+            })
             const data = await res.json()
             return data
         }

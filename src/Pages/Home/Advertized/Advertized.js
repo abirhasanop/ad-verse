@@ -9,7 +9,11 @@ const Advertized = () => {
     const { data: advertizedProduct = [], refetch } = useQuery({
         queryKey: ["advertizedproduct"],
         queryFn: async () => {
-            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/advertizedproduct`)
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/advertizedproduct`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('adVerseToken')}`
+                }
+            })
             const data = await res.json()
             return data
         }
