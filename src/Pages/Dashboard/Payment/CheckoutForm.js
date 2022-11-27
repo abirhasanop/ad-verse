@@ -11,7 +11,7 @@ const CheckoutForm = ({ order }) => {
 
     const stripe = useStripe()
     const elements = useElements()
-    const { price, buyerName, email } = order
+    const { price, buyerName, email, _id } = order
 
 
     useEffect(() => {
@@ -76,6 +76,24 @@ const CheckoutForm = ({ order }) => {
         if (paymentIntent.status === "succeeded") {
             setSucces("Your Payment completed")
             setTransactionId(paymentIntent.id)
+
+
+            const payment = {
+                price,
+                transactionId: paymentIntent.id,
+                email,
+                orderId: _id
+            }
+
+            fetch(`${process.env.REACT_APP_SERVER_URL}/payments`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payment)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                })
         }
         setProcessing(false)
         console.log("payment Intent", paymentIntent);

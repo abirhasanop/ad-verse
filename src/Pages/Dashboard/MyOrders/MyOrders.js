@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 
@@ -29,6 +30,7 @@ const MyOrders = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                toast.success("Order Cancelled")
                 refetch()
             })
     }
@@ -50,7 +52,8 @@ const MyOrders = () => {
                     <tbody>
                         {
                             myOrders?.map((order, i) => {
-                                const { _id, img, productName, price, productId } = order
+                                const { _id, img, productName, price, productId, isPaid } = order
+                                console.log(order);
 
                                 return (
                                     <tr key={_id}>
@@ -71,9 +74,16 @@ const MyOrders = () => {
                                             {price}
                                         </td>
                                         <th>
-                                            <Link to={`/dashboard/myorders/payment/${_id}`}>
-                                                <button className="btn btn-success text-white btn-xs">Pay</button>
-                                            </Link>
+                                            {
+                                                !isPaid ? <>
+                                                    <Link to={`/dashboard/myorders/payment/${_id}`}>
+                                                        <button className="btn btn-success text-white btn-xs">Pay Now</button>
+                                                    </Link>
+                                                </> :
+                                                    <>
+                                                        <button className="btn btn-accent text-white btn-xs">Paid</button>
+                                                    </>
+                                            }
                                         </th>
                                         <td>
                                             <button onClick={() => handleCancelOrder(_id, productId)} className="btn btn-error btn-xs">Cancel</button>
