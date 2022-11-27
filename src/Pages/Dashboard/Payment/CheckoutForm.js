@@ -8,19 +8,19 @@ const CheckoutForm = ({ order }) => {
 
     const stripe = useStripe()
     const elements = useElements()
-    const {price} = order
+    const { price, buyerName, email} = order
 
 
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("/create-payment-intent", {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/create-payment-intent`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+            body: JSON.stringify({ price }),
         })
             .then((res) => res.json())
             .then((data) => setClientSecret(data.clientSecret));
-    }, []);
+    }, [price]);
 
 
 
@@ -49,6 +49,27 @@ const CheckoutForm = ({ order }) => {
             setCardError("")
         }
 
+
+
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: buyerName,
+                        email: email
+                    },
+                },
+            },
+        );
+
+        if(confirmError){
+            setCardError(confirmError.message)
+            return
+        }
+        console.log("payment Intent", paymentIntent);
+
     }
 
     return (
@@ -70,7 +91,7 @@ const CheckoutForm = ({ order }) => {
                         },
                     }}
                 />
-                <button className='btn btn-sm bg-orange-500 border-none mt-5' type="submit" disabled={!stripe}>
+                <button className='btn btn-sm bg-orange-500 border-none mt-5' type="submit" disabled={!stripe || !clientSecret}>
                     Pay
                 </button>
             </form>
