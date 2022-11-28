@@ -15,7 +15,7 @@ const Category = () => {
     return (
         <section className='container mx-auto my-32'>
             <div>
-                <h1 className='text-4xl font-bold'>Category</h1><hr className='my-7' />
+                <h1 className='text-4xl font-bold'>Categories</h1><hr className='my-7' />
             </div>
 
             {/* category Options */}

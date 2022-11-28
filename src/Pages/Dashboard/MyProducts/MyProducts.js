@@ -54,7 +54,7 @@ const MyProducts = () => {
     console.log(myProducts);
     return (
         <div>
-            <h1 className="text-3xl">My Products {myProducts.length}</h1>
+            <h1 className="text-3xl mb-5">My Products</h1>
 
             <div className='flex flex-wrap gap-10'>
                 {

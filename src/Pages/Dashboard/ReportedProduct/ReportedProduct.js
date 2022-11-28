@@ -26,7 +26,7 @@ const ReportedProduct = () => {
 
     return (
         <div>
-            <h1 className='text-3xl'>Reported Product {reportedPriduct.length}</h1>
+            <h1 className='text-3xl mb-5'>Reported Product</h1>
 
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">

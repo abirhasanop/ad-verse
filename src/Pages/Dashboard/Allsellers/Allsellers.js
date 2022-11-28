@@ -55,7 +55,7 @@ const Allsellers = () => {
 
     return (
         <div>
-            <h1 className="text-3xl">All Sellers</h1>
+            <h1 className="text-3xl mb-5">All Sellers</h1>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
