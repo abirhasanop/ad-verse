@@ -2,26 +2,31 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import BlockSpinner from '../../../Components/ReactSpinner/BlockSpinner';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext)
 
 
-    const { data: myOrders = [], refetch } = useQuery({
+    const { data: myOrders = [], refetch, isLoading } = useQuery({
         queryKey: ["myorders"],
         queryFn: async () => {
-            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/orders?email=${user?.email}`, {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('adVerseToken')}`
-                }
-            })
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/orders?email=${user?.email}`)
             const data = await res.json()
             return data
         }
     })
 
     // console.log(myOrders);
+
+
+    if (isLoading) {
+        return <BlockSpinner />
+    }
+
+
+
 
     const handleCancelOrder = (_id, productId) => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/orders/delete/${_id}`, {

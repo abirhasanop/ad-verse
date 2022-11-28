@@ -2,9 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
 import { GoVerified } from 'react-icons/go';
+import ColorRingSpinner from '../../../Components/ReactSpinner/ColorRingSpinner';
 
 const Allsellers = () => {
-    const { data: allSellers = [], refetch } = useQuery({
+    const { data: allSellers = [], refetch, isLoading } = useQuery({
         queryKey: ["allsellers"],
         queryFn: async () => {
             const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/sellers`)
@@ -12,6 +13,11 @@ const Allsellers = () => {
             return data
         }
     })
+
+    if (isLoading) {
+        return <ColorRingSpinner />
+    }
+
 
 
     const handleVerify = (email, name) => {

@@ -1,21 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
+import ColorRingSpinner from '../../../Components/ReactSpinner/ColorRingSpinner';
 
 const AllBuyers = () => {
 
-    const { data: allBuyers = [], refetch } = useQuery({
+    const { data: allBuyers = [], refetch, isLoading } = useQuery({
         queryKey: ["allbuyers"],
         queryFn: async () => {
-            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/buyers`, {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('adVerseToken')}`
-                }
-            })
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/buyers`)
             const data = await res.json()
             return data
         }
     })
+
+
+    if (isLoading) {
+        return <ColorRingSpinner />
+    }
 
 
     const handleUserDelete = (_id, name) => {

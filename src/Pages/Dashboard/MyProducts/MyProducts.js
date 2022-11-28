@@ -3,9 +3,10 @@ import { AuthContext } from '../../../Contexts/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import MyProduct from './MyProduct';
 import toast from 'react-hot-toast';
+import ColorRingSpinner from '../../../Components/ReactSpinner/ColorRingSpinner';
 const MyProducts = () => {
     const { user } = useContext(AuthContext)
-    const { data: myProducts = [], refetch } = useQuery({
+    const { data: myProducts = [], refetch, isLoading } = useQuery({
         queryKey: ["myproducts"],
         queryFn: async () => {
             const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/myproducts?email=${user?.email}`)
@@ -13,6 +14,14 @@ const MyProducts = () => {
             return data
         }
     })
+
+
+    if (isLoading) {
+        return <ColorRingSpinner />
+    }
+
+
+
 
 
     const handleProductDelete = (_id) => {

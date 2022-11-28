@@ -5,12 +5,13 @@ import Product from '../Home/Product/Product';
 import categoryImg1 from '../../Assets/categoryOption1.jpg'
 import categoryImg2 from '../../Assets/categoryOption2.jpg'
 import PurchaseModal from '../../Components/PurchaseModal/PurchaseModal';
+import ColorRingSpinner from '../../Components/ReactSpinner/ColorRingSpinner';
 
 const CategoryProducts = () => {
     const [product, setProduct] = useState(null)
     const { categoryName } = useParams()
 
-    const { data: categoryProducts = [], refetch } = useQuery({
+    const { data: categoryProducts = [], refetch, isLoading } = useQuery({
         queryKey: ["categoryProducts", categoryName],
         queryFn: async () => {
             const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/allproducts/${categoryName}`)
@@ -24,6 +25,12 @@ const CategoryProducts = () => {
         { categoryName: "Samsung", img: "https://images.unsplash.com/photo-1488509082528-cefbba5ad692?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGhvbmV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" },
         { categoryName: "Iphone", img: categoryImg2 },
     ]
+
+    if (isLoading) {
+        return <ColorRingSpinner />
+    }
+
+
 
 
     // scroll bar issue fixing

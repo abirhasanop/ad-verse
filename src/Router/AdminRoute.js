@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import BlockSpinner from '../Components/ReactSpinner/BlockSpinner';
 import { AuthContext } from '../Contexts/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
 
@@ -9,7 +10,7 @@ const AdminRoute = ({ children }) => {
     const location = useLocation()
 
     if (loding || isAdminLoading) {
-        return <div>Loding..........</div>
+        return <BlockSpinner />
     }
 
     if (!user) {

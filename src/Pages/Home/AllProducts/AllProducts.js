@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import Product from '../Product/Product';
 import PurchaseModal from '../../../Components/PurchaseModal/PurchaseModal';
+import BlockSpinner from '../../../Components/ReactSpinner/BlockSpinner';
 
 const AllProducts = () => {
     const [product, setProduct] = useState(null)
@@ -18,12 +19,15 @@ const AllProducts = () => {
 
     console.log(allProducts);
 
+    // if (isLoading) {
+    //     return <BlockSpinner />
+    // }
 
 
     return (
         <section className='container mx-auto my-32'>
             <div>
-                <h1 className='text-4xl font-bold'>Explore All Products{allProducts.length}</h1><hr className='my-7' />
+                <h1 className='text-4xl font-bold'>Explore All Products</h1><hr className='my-7' />
             </div>
 
             {/* products */}

@@ -1,23 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import PurchaseModal from '../../../Components/PurchaseModal/PurchaseModal';
+import BlockSpinner from '../../../Components/ReactSpinner/BlockSpinner';
 import Product from '../Product/Product';
 
 const Advertized = () => {
     const [product, setProduct] = useState(null)
 
-    const { data: advertizedProduct = [], refetch } = useQuery({
+    const { data: advertizedProduct = [], refetch, isLoading } = useQuery({
         queryKey: ["advertizedproduct"],
         queryFn: async () => {
-            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/advertizedproduct`, {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('adVerseToken')}`
-                }
-            })
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/advertizedproduct`)
             const data = await res.json()
             return data
         }
     })
+
+    if (isLoading) {
+        return <BlockSpinner />
+    }
+
 
 
     return (

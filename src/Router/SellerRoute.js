@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import ColorRingSpinner from '../Components/ReactSpinner/ColorRingSpinner';
 import { AuthContext } from '../Contexts/AuthProvider';
 import useSeller from '../hooks/useSeller';
 
@@ -9,7 +10,7 @@ const SellerRoute = ({ children }) => {
     const location = useLocation()
 
     if (loding || isSellerLoading) {
-        return <div>Loding Seller Route ............</div>
+        return <ColorRingSpinner />
     }
     if (!user || !isSeller) {
         return <Navigate to='/login' state={{ from: location }} replace></Navigate>
