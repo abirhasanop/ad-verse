@@ -1,3 +1,9 @@
+Admin Email: abir@abirhasan.com
+Admin Password: Abir77@?
+
+
+
+
 # Ad Verse
 
 This  is a buy sell application where user can buy and sell out his/her 2nd hand product With attractive design and fast loading
