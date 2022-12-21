@@ -2,9 +2,38 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import { FaUserAlt } from "react-icons/fa"
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const Header = () => {
     const { user, logOut } = useContext(AuthContext)
+
+
+    // Dark mode starts
+    const [dark, setDark] = useState(false)
+
+    const handleTheme = () => {
+        setDark(!dark)
+        localStorage.setItem("dark-mode", !dark)
+    }
+
+    useEffect(() => {
+        if (dark) {
+            document.querySelector("html").setAttribute("data-theme", "night")
+        } else {
+            document.querySelector("html").setAttribute("data-theme", "light")
+        }
+    }, [dark])
+
+    useEffect(() => {
+        const localDark = JSON.parse(localStorage.getItem("dark-mode"))
+        console.log(localDark);
+        setDark(localDark)
+    }, [])
+
+    // dark mode ends
+
+
 
 
     return (
@@ -55,12 +84,14 @@ const Header = () => {
                 <div className="navbar-end">
                     <div className='flex items-center'>
                         <p className='text-md font-semibold'>{user?.displayName}</p>
-                        {/* <img className='w-8 h-8 ml-3 rounded-full' src={user?.photoURL} alt="" /> */}
-                        <FaUserAlt className='ml-3 text-2xl text-orange-500' />
+                        {
+                            user?.photoURL ?
+                                <img className='w-8 h-8 ml-3 rounded-full' src={user.photoURL} alt="" />
+                                :
+                                <FaUserAlt className='text-2xl text-orange-500' />
+                        }
+                        <input onClick={handleTheme} type="checkbox" className="toggle mx-3" checked={dark} />
                     </div>
-
-                    {/* <Link className="btn">Sell Your Product</Link> */}
-
 
                     <label htmlFor="dashboard-drawer" tabIndex={0} className="btn btn-ghost lg:hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>

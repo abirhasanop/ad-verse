@@ -17,8 +17,6 @@ const AllProducts = () => {
         }
     })
 
-    console.log(allProducts);
-
     // if (isLoading) {
     //     return <BlockSpinner />
     // }
