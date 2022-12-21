@@ -27,7 +27,7 @@ Our goal is to provide  value and result for Clients by their requirements
 
 Clone the application from github using this link:
 
-- [x] https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-abirhasanop
+- [x] https://github.com/abirhasanop/ad-verse
 
 Live Website Link: 
 
@@ -35,7 +35,7 @@ Live Website Link:
 From the project directory run: -
 
 Server Link: 
-- [x] https://github.com/programming-hero-web-course-4/b612-used-products-resale-server-side-abirhasanop
+- [x] 
 
 - [x] npm install.
   > Once the node_modules installed -
